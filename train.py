@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
             total_iters += opt.batch_size
             epoch_iter += opt.batch_size
-            macs, params = profile(model, input=data)
+            macs, params = profile(model, data)
             print(macs)
             print(params)
             exit()
