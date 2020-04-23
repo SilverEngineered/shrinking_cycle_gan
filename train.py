@@ -9,6 +9,7 @@ from thop import profile
 from tqdm import tqdm
 from argparse import Namespace
 import numpy as np
+from PIL import Image
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
@@ -50,11 +51,14 @@ if __name__ == '__main__':
                 #visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
                 print("here")
                 x = model.get_current_visuals()
-                x = x['real_A'].cpu().numpy()
+                x = x['real_A'].cpu().numpy().reshape([256, 256, 3])
                 print(x)
                 print(x.shape)
                 print(np.max(x))
                 print(np.min(x))
+                x = map_image(x)
+                img = Image.fromarray(x, 'RGB')
+                img.save('test.png')
                 exit()
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
@@ -77,3 +81,9 @@ if __name__ == '__main__':
 
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
         model.update_learning_rate()                     # update learning rates at the end of every epoch.
+
+        def map_image(img):
+            new_range = 255
+            old_range = 2
+            scaled = np.arrary((img +1) / float(old_range), dtype=float)
+            return scaled * new_range
