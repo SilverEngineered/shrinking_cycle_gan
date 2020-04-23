@@ -84,7 +84,7 @@ class BaseModel(ABC):
         """
         if self.isTrain or self.isTeacher:
             self.schedulers = [networks.get_scheduler(optimizer, opt) for optimizer in self.optimizers]
-        elif not self.isTrain or opt.continue_train:
+        if not (self.isTrain or opt.continue_train) and not self.isTeacher:
             load_suffix = 'iter_%d' % opt.load_iter if opt.load_iter > 0 else opt.epoch
             self.load_networks(load_suffix)
         self.print_networks(opt.verbose)
