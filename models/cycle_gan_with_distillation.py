@@ -143,6 +143,7 @@ class CycleGANModelWithDistillation(BaseModel):
         images = self.teacher_model.get_current_visuals()
         self.teacher_A_loss = self.criterionCycle(self.netG_A(self.real_B), images['fake_B'])
         self.teacher_B_loss = self.criterionCycle(self.netG_B(self.real_A), images['fake_A'])
+        self.dist_loss = (self.teacher_A_loss + self.teacher_B_loss) / 2
         # GAN loss D_A(G_A(A))
         self.loss_G_A = self.criterionGAN(self.netD_A(self.fake_B), True)
         # GAN loss D_B(G_B(B))
