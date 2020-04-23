@@ -15,7 +15,7 @@ from PIL import Image
 def map_image(img):
     new_range = 255
     old_range = 2
-    scaled = np.arrary((img +1) / float(old_range), dtype=float)
+    scaled = np.array((img +1) / float(old_range), dtype=float)
     return scaled * new_range
 
 
