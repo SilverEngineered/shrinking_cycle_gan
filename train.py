@@ -11,6 +11,14 @@ from argparse import Namespace
 import numpy as np
 from PIL import Image
 
+
+def map_image(img):
+    new_range = 255
+    old_range = 2
+    scaled = np.arrary((img +1) / float(old_range), dtype=float)
+    return scaled * new_range
+
+
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
@@ -82,8 +90,3 @@ if __name__ == '__main__':
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
         model.update_learning_rate()                     # update learning rates at the end of every epoch.
 
-        def map_image(img):
-            new_range = 255
-            old_range = 2
-            scaled = np.arrary((img +1) / float(old_range), dtype=float)
-            return scaled * new_range
