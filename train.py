@@ -16,6 +16,7 @@ if __name__ == '__main__':
     opt2 = opt
     opt2.name = 'monet2photo_pretrained'
     opt2.isTrain = False
+    opt2['teacher'] = True
     teacher = CycleGANModel(opt2)
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
     model = CycleGANModelWithDistillation(opt, teacher)
