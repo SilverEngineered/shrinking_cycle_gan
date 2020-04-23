@@ -3,20 +3,25 @@ from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
 from models.cycle_gan_model import CycleGANModel
+from models.cycle_gan_with_distillation import CycleGANModelWithDistillation
 from util.visualizer import Visualizer
 from thop import profile
+from tqdm import tqdm
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
-    model = CycleGANModel(opt)
-    #model = create_model(opt)      # create a model given opt.model and other options
+    print(opt)
+    exit()
+    model = CycleGANModelWithDistillation(opt)
+    teacher = CycleGANModel(opt)
     model.setup(opt)               # regular setup: load and print networks; create schedulers
+    teacher.setup(opt)
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
-    for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
+    for epoch in tqdm(range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1)):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
         epoch_start_time = time.time()  # timer for entire epoch
         iter_data_time = time.time()    # timer for data loading per iteration
         epoch_iter = 0                  # the number of training iterations in current epoch, reset to 0 every epoch
