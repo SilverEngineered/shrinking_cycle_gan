@@ -48,7 +48,7 @@ if __name__ == '__main__':
                 save_result = total_iters % opt.update_html_freq == 0
                 model.compute_visuals()
                 visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
-                print()
+                print("here")
                 x = model.get_current_visuals()
                 print(x)
                 exit()
