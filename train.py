@@ -13,13 +13,13 @@ if __name__ == '__main__':
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
-    model = CycleGANModelWithDistillation(opt)
-    model.setup(opt)
     opt2 = opt
     opt2.isTrain = False
     opt2.name = 'monet2photo_pretrained'
     teacher = CycleGANModel(opt2)
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
+    model = CycleGANModelWithDistillation(opt, teacher)
+    model.setup(opt)
     print("here")
     exit()
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
