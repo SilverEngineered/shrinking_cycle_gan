@@ -59,15 +59,14 @@ if __name__ == '__main__':
             model.optimize_parameters()   # calculate loss functions, get gradients, update network weights
 
             if total_iters % opt.display_freq == 0:   # display images on visdom and save images to a HTML file
-                save_result = total_iters % opt.update_html_freq == 0
-                model.compute_visuals()
-                visuals = model.get_current_visuals()  # get image results
-                img_path = model.get_image_paths()  # get image paths
-                print(img_path)
-                exit()
-                #if i % 1 == 0:  # save images to an HTML file
-                    #print('processing (%04d)-th image... %s' % (i, img_path))
-                save_images(webpage, visuals, img_path)
+                #save_result = total_iters % opt.update_html_freq == 0
+                #model.compute_visuals()
+                #visuals = model.get_current_visuals()  # get image results
+                #img_path = model.get_image_paths()  # get image paths
+                #print(img_path)
+                #exit()
+                #save_images(webpage, visuals, img_path)
+                pass
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
                 losses = model.get_current_losses()
