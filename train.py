@@ -51,6 +51,7 @@ if __name__ == '__main__':
                 x = model.get_current_visuals()
                 x = x['real_A'].numpy()
                 print(x)
+                print(x.shape)
                 exit()
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
