@@ -16,8 +16,6 @@ if __name__ == '__main__':
     opt2 =  Namespace(**vars(opt))
     opt2.name = 'monet2photo_pretrained'
     opt2.isTrain = False
-    print(opt)
-    exit()
     teacher = CycleGANModel(opt2)
     teacher.isTeacher = True
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
