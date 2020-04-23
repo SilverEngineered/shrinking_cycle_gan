@@ -14,11 +14,9 @@ if __name__ == '__main__':
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
     opt2 = opt
-    opt2.isTrain = False
     opt2.name = 'monet2photo_pretrained'
     teacher = CycleGANModel(opt2)
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
-    opt2.model = 'test'
     print(opt2)
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
