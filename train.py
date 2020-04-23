@@ -63,6 +63,8 @@ if __name__ == '__main__':
                 model.compute_visuals()
                 visuals = model.get_current_visuals()  # get image results
                 img_path = model.get_image_paths()  # get image paths
+                print(img_path)
+                exit()
                 #if i % 1 == 0:  # save images to an HTML file
                     #print('processing (%04d)-th image... %s' % (i, img_path))
                 save_images(webpage, visuals, img_path)
