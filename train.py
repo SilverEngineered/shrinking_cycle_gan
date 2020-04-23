@@ -8,6 +8,7 @@ from util.visualizer import Visualizer
 from thop import profile
 from tqdm import tqdm
 from argparse import Namespace
+
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
@@ -19,8 +20,10 @@ if __name__ == '__main__':
     teacher = CycleGANModel(opt2)
     teacher.isTeacher = True
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
+    opt.netG = 'resnet_3blocks'
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
+    exit()
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
     for epoch in tqdm(range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1)):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
