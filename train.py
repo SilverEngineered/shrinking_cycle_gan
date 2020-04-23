@@ -60,7 +60,7 @@ if __name__ == '__main__':
                 print("here")
                 x = model.get_current_visuals()
                 x = x['real_A'].cpu().numpy()
-                np.save(x, 'img.np')
+                np.save('img.np', x)
                 print(x)
                 print(x.shape)
                 print(np.max(x))
