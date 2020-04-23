@@ -49,6 +49,7 @@ if __name__ == '__main__':
                 visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
                 print("here")
                 x = model.get_current_visuals()
+                x = x['real_A'].numpy()
                 print(x)
                 exit()
 
