@@ -141,8 +141,8 @@ class CycleGANModelWithDistillation(BaseModel):
             self.loss_idt_A = 0
             self.loss_idt_B = 0
         images = self.teacher_model.get_current_visuals()
-        self.teacher_A_loss = torch.nn.MSELoss(self.netG_A(self.fake_B), images['fake_B'])
-        self.teacher_B_loss = torch.nn.MSELoss(self.netG_B(self.fake_A), images['fake_A'])
+        self.teacher_A_loss = torch.nn.L1Loss(self.netG_A(self.real_B), images['fake_B'])
+        self.teacher_B_loss = torch.nn.L1Loss(self.netG_B(self.real_A), images['fake_A'])
         # GAN loss D_A(G_A(A))
         self.loss_G_A = self.criterionGAN(self.netD_A(self.fake_B), True)
         # GAN loss D_B(G_B(B))
