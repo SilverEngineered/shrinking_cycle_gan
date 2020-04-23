@@ -143,6 +143,8 @@ class CycleGANModelWithDistillation(BaseModel):
         images = self.teacher_model.get_current_visuals()
         print(images['fake_B'])
         print(images['fake_B'].shape)
+        print(self.netD_A(self.fake_B))
+        print(self.netD_A(self.fake_B).shape)
         exit()
         self.teacher_A_loss = torch.nn.MSELoss(self.netD_A(self.fake_B), images['fake_B'])
         self.teacher_B_loss = torch.nn.MSELoss(self.netD_B(self.fake_A), images['fake_A'])
