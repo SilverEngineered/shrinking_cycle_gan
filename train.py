@@ -10,7 +10,9 @@ from tqdm import tqdm
 from argparse import Namespace
 import numpy as np
 from PIL import Image
-
+from util.visualizer import save_images
+from util import html
+import os
 
 def map_image(img):
     new_range = 255
@@ -33,13 +35,15 @@ if __name__ == '__main__':
     opt.netG = 'resnet_3blocks'
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
-    #visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
+    web_dir = os.path.join(opt.results_dir, opt.name, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
+    webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
+    visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
     for epoch in tqdm(range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1)):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
         epoch_start_time = time.time()  # timer for entire epoch
         iter_data_time = time.time()    # timer for data loading per iteration
         epoch_iter = 0                  # the number of training iterations in current epoch, reset to 0 every epoch
-        #visualizer.reset()              # reset the visualizer: make sure it saves the results to HTML at least once every epoch
+        visualizer.reset()              # reset the visualizer: make sure it saves the results to HTML at least once every epoch
 
         for i, data in enumerate(dataset):  # inner loop within one epoch
             iter_start_time = time.time()  # timer for computation per iteration
@@ -56,26 +60,18 @@ if __name__ == '__main__':
             if total_iters % opt.display_freq == 0:   # display images on visdom and save images to a HTML file
                 save_result = total_iters % opt.update_html_freq == 0
                 model.compute_visuals()
-                #visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
-                print("here")
-                x = model.get_current_visuals()
-                x = x['real_A'].cpu().numpy()
-                np.save('img.np', x)
-                print(x)
-                print(x.shape)
-                print(np.max(x))
-                print(np.min(x))
-                x = map_image(x)
-                img = Image.fromarray(x, 'RGB')
-                img.save('test.png')
-                exit()
+                visuals = model.get_current_visuals()  # get image results
+                img_path = model.get_image_paths()  # get image paths
+                #if i % 1 == 0:  # save images to an HTML file
+                    #print('processing (%04d)-th image... %s' % (i, img_path))
+                save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
                 losses = model.get_current_losses()
                 t_comp = (time.time() - iter_start_time) / opt.batch_size
-                #visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
-               # if opt.display_id > 0:
-                   # visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, losses)
+                visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
+                if opt.display_id > 0:
+                    visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, losses)
 
             if total_iters % opt.save_latest_freq == 0:   # cache our latest model every <save_latest_freq> iterations
                 print('saving the latest model (epoch %d, total_iters %d)' % (epoch, total_iters))
