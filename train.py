@@ -13,12 +13,15 @@ if __name__ == '__main__':
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
-    print(opt)
-    exit()
     model = CycleGANModelWithDistillation(opt)
-    teacher = CycleGANModel(opt)
-    model.setup(opt)               # regular setup: load and print networks; create schedulers
-    teacher.setup(opt)
+    model.setup(opt)
+    opt2 = opt
+    opt2.isTrain = False
+    opt2.name = 'monet2photo_pretrained'
+    teacher = CycleGANModel(opt2)
+    teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
+    print("here")
+    exit()
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
     for epoch in tqdm(range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1)):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
