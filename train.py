@@ -17,11 +17,8 @@ if __name__ == '__main__':
     opt2.name = 'monet2photo_pretrained'
     teacher = CycleGANModel(opt2)
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
-    print(opt2)
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
-    print("here")
-    exit()
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
     for epoch in tqdm(range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1)):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
