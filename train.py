@@ -33,6 +33,7 @@ if __name__ == '__main__':
     teacher.isTeacher = True
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
     opt.netG = 'resnet_3blocks'
+    opt.results_dir = 'results'
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
     web_dir = os.path.join(opt.results_dir, opt.name, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
