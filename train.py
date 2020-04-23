@@ -18,6 +18,8 @@ if __name__ == '__main__':
     opt2.name = 'monet2photo_pretrained'
     teacher = CycleGANModel(opt2)
     teacher.setup(opt2)               # regular setup: load and print networks; create schedulers
+    opt2.model = 'test'
+    print(opt2)
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
     print("here")
