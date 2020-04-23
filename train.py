@@ -14,6 +14,7 @@ if __name__ == '__main__':
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
     opt2 = opt
+    print(type(opt))
     opt2.name = 'monet2photo_pretrained'
     opt2.isTrain = False
     print(opt)
