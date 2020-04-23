@@ -8,6 +8,7 @@ from util.visualizer import Visualizer
 from thop import profile
 from tqdm import tqdm
 from argparse import Namespace
+import numpy as np
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
@@ -52,6 +53,8 @@ if __name__ == '__main__':
                 x = x['real_A'].cpu().numpy()
                 print(x)
                 print(x.shape)
+                print(np.max(x))
+                print(np.min(x))
                 exit()
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
