@@ -69,7 +69,8 @@ class CycleGANModelWithDistillation(BaseModel):
             self.optimizers.append(self.optimizer_D)
         self.teacher_model = teacher_model
         self.dist_factor = .5
-    def set_input(self, input):
+
+    def set_input(self, input, test=False):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
 
         Parameters:
@@ -81,6 +82,9 @@ class CycleGANModelWithDistillation(BaseModel):
         self.real_A = input['A' if AtoB else 'B'].to(self.device)
         self.real_B = input['B' if AtoB else 'A'].to(self.device)
         self.image_paths = input['A_paths' if AtoB else 'B_paths']
+        if test:
+            self.real = input['A'].to(self.device)
+            self.image_paths = input['A_paths']
 
     def forward(self):
         """Run forward pass; called by both functions <optimize_parameters> and <test>."""
