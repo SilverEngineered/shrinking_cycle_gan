@@ -26,7 +26,7 @@ if __name__ == '__main__':
     opt.netG = 'resnet_3blocks'
     opt.results_dir = 'results'
     opt.continue_train = True
-
+    opt2.continue_train = True
     model = CycleGANModelWithDistillation(opt, teacher)      # create a model given opt.model and other options
     model.setup(opt)              # regular setup: load and print networks; create schedulers
     # create a website
