@@ -36,6 +36,7 @@ if __name__ == '__main__':
     opt.results_dir = 'results'
     model = CycleGANModelWithDistillation(opt, teacher)
     model.setup(opt)
+    print(dataset)
     web_dir = os.path.join(opt.results_dir, opt.name, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
