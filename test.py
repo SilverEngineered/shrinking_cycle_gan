@@ -39,8 +39,17 @@ if __name__ == '__main__':
     for i, data in enumerate(dataset):
         if i >= opt.num_test:  # only apply our model to opt.num_test images.
             break
-        model.set_input(data, test=True)  # unpack data from data loader
-        model.test()           # run inference
+        model.set_input(data)  # unpack data from data loader
+        #model.test()         # run inference
+
+        model.compute_visuals()
+        visuals = model.get_current_visuals()  # get image results
+        img_path = model.get_image_paths()  # get image paths
+        print(img_path)
+        save_images(webpage, visuals, img_path)
+        exit()
+
+
         visuals = model.get_current_visuals()  # get image results
         img_path = model.get_image_paths()     # get image paths
         if i % 5 == 0:  # save images to an HTML file
