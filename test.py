@@ -38,6 +38,8 @@ if __name__ == '__main__':
     #if opt.eval:
        # model.eval()
     for i, data in enumerate(dataset):
+        if i > 10:
+            exit()
         #if i >= opt.num_test:  # only apply our model to opt.num_test images.
            # break
         #model.set_input(data)  # unpack data from data loader
@@ -54,7 +56,6 @@ if __name__ == '__main__':
         img_path = model.get_image_paths()  # get image paths
         print(img_path)
         save_images(webpage, visuals, img_path)
-        exit()
 
 
         visuals = model.get_current_visuals()  # get image results
