@@ -16,7 +16,6 @@ if __name__ == '__main__':
     opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
-    print(opt.dataset)
     opt2 = Namespace(**vars(opt))
     opt2.name = 'monet2photo_pretrained'
     opt2.isTrain = False
