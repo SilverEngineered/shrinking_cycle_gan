@@ -25,7 +25,7 @@ if __name__ == '__main__':
     teacher.setup(opt2)  # regular setup: load and print networks; create schedulers
     opt.netG = 'resnet_3blocks'
     opt.results_dir = 'results'
-
+    opt.continue_train = True
 
     model = CycleGANModelWithDistillation(opt, teacher)      # create a model given opt.model and other options
     model.setup(opt)              # regular setup: load and print networks; create schedulers
