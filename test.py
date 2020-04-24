@@ -40,8 +40,14 @@ if __name__ == '__main__':
     for i, data in enumerate(dataset):
         #if i >= opt.num_test:  # only apply our model to opt.num_test images.
            # break
-        model.set_input(data)  # unpack data from data loader
+        #model.set_input(data)  # unpack data from data loader
         #model.test()         # run inference
+
+        teacher.set_input(data)
+        teacher.test()
+        model.set_input(data)  # unpack data from dataset and apply preprocessing
+        model.optimize_parameters()
+
 
         model.compute_visuals()
         visuals = model.get_current_visuals()  # get image results
